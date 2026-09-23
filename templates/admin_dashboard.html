@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <br><title>ADMIN DASHBOARD</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+    <body class="container mt-5">
+        <h1 class="text-center text-secondary fw-bold pb-2 border-bottom border-2 mb-4">Admin Dashboard</h1>
+        <br><br>
+
+        <div class = "row mb-4">
+
+            
+            <div class="col-md-3">
+                <div class="card text-center h-100">
+                    <div class="card-body ">
+                        <h5 class="card-title">Total Treks</h5>
+                        <h2 class="fw-bold" >{{ total_treks}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"> Total Staff</h5>
+                        <h2 class="fw-bold" >{{ total_staff}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" >Total User</h5>
+                        <h2 class="fw-bold" >{{ total_users}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" >Total Bookings</h5>
+                        <h2 class="fw-bold" >{{ total_bookings}}</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <hr>
+
+        <h2 class="mt-4 mb-3">Pending Staff Requests</h2>
+
+        {% if pending_staff %}
+
+        {%for staff in pending_staff%}
+        
+        <div class="card mb-3">  
+            <div class="card-body d-flex justify-content-between align-items-center">
+                
+                <div>
+                    <strong>{{ staff.name}}</strong><br>
+                    {{staff.email}}
+                </div>
+               
+                <a  href="/approve/{{ staff.id}}" class="btn btn-success mt-2">Approve
+                </a>
+
+            </div>
+        </div>
+             
+        {% endfor %}
+
+    {% else %} 
+    <p>No Pending Staff</p> 
+
+<hr>
+
+    {% endif %}
+    <div class="text-center my-3">
+        <a href="/add_trek" class="btn btn-primary">
+            + ADD New Treks
+        </a>
+
+        <a href="/all_bookings" class="btn btn-success">
+            View All Bookings
+        </a>
+        
+        <a href="/all_staff" class="btn btn-info">
+            View All Staff
+        </a>
+        
+        
+        <a href="/all_users" class="btn btn-secondary">
+            View All Users
+        </a>
+    </div>
+<hr>
+
+<h2 class ="mt-4 mb-3">Announcement</h2>
+
+<form action="/announcement" method="POST">
+
+    <textarea
+        name="message"
+        class="form-control"
+        rows="6"
+        placeholder="Enter announcement">
+
+        {% if announcement %}
+        {{ announcement.message }}
+        {% endif %}
+
+    </textarea>
+
+    <br>
+
+    <button type ="submit" class="btn btn-success">
+    Save Announcement
+    </button>
+
+</form>
+
+<br>
+<hr>
+
+<form method="GET" action="/admin" class="mb-4">
+
+<div class="row">
+
+<div class="col-md-6">
+
+    <input
+    type="search"
+    name="search"
+    class="form-control"
+    placeholder="Search by trek name or location"
+    value="{{ request.args.get('search','') }}">
+
+</div>
+
+<br><br>
+<div class="col-md-3">
+
+    <select name="difficulty" class="form-select">
+
+        <option value="All">All Difficulty</option>
+
+        <option value="Easy"
+        {% if request.args.get('difficulty')=="Easy" %}
+        selected
+        {% endif %}>
+        Easy
+        </option>
+
+        <option value="Medium"
+        {% if request.args.get('difficulty')=="Medium" %}
+        selected
+        {% endif %}>
+        Medium
+        </option>
+
+        <option value="Hard"
+            {% if request.args.get('difficulty')=="Hard" %}
+            selected
+            {% endif %}>
+            Hard
+        </option>
+
+    </select>
+
+</div>
+
+<div class="col-md-3">
+    <div class="d-flex justify-content-end gap-5">
+        <button class="btn btn-primary">
+        Search</button>
+
+        <a href="/admin" class="btn btn-secondary">
+        Reset
+        </a>
+    </div>
+</div>
+
+
+</form>
+
+<hr>
+
+    <h2 class="mt-4 mb-3">ALL TREKS</h2>
+    {% if treks %}
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Duration</th>
+            <th>Difficulty</th>
+            <th>Slots</th>
+            <th>Status</th>
+            <th>Assigned Staff</th>
+            <th>Action</th>
+        </tr>
+
+        {% for trek in treks %}
+        <tr>
+            <td>{{trek.name}}</td>
+            <td>{{trek.location}}</td>
+            <td>{{trek.duration}}</td>
+            <td>{{trek.difficulty}}</td>
+            <td>{{trek.available_slots}}</td>
+            <td>{{trek.status}}</td>
+            <td>
+                    {% if trek.staff %}
+                        {{ trek.staff.name }}
+                    {% else %}
+                        Not Assigned
+                    {% endif %}
+            </td>
+            
+            <td>
+                <a href="/edit_trek/{{ trek.id }}" class="btn btn-warning btn-sm">Edit
+                </a>
+
+                <a href="/delete_trek/{{ trek.id }}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>    
+
+
+        {% else %}  
+        <p>No Treks Added Yet</p>
+
+        {% endif %}
+
+
+    </body>
+</html>
+
+<br><br>
+
+<div class="text-center">
+    
+    <a href="/logout" class="btn btn-danger">Logout</a>
+</div>
+<br>
+<br>
+
+<hr>
+
+<footer class="text-center text-muted small">
+
+    <p class="mb-1">
+    © 2026 Trekking Management Application</p>
+
+</footer>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>All Staff</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="container mt-4">
+
+    <h2 class="text-center mb-2">
+        Trekking Management Application
+    </h2>
+
+    <h3 class="text-center text-primary mb-4">
+        All Staff
+    </h3>
+
+<form method="GET" action="/all_staff" class="row mb-4">
+
+    <div class="col-md-6">
+
+    <input
+    type="search"
+    name="search"
+    class="form-control"
+    placeholder="Search Staff by Name or Email"
+    value="{{ search }}">
+
+    </div>
+
+    <div class="col-md-6">
+
+        <button class="btn btn-primary">
+        Search
+        </button>
+
+        <a href="/all_staff" class="btn btn-secondary">
+        Show All
+        </a>
+
+    </div>
+
+</form>
+
+{% if staff %}
+
+<div class="card">
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-hover table-striped">
+
+        <tr>
+
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Approved</th>
+            <th>Status</th>
+            <th>Action</th>
+
+        </tr>
+
+        {% for s in staff %}
+
+        <tr>
+
+            <td>{{ s.id }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.email }}</td>
+
+            <td>
+
+                {% if s.approved %}
+
+                Approved
+
+                {% else %}
+
+                Pending
+
+                {% endif %}
+            </td>
+
+
+            <td>
+
+                {% if s.active %}
+                Active
+
+                {% else %}
+                Inactive
+
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                {% if s.active %}
+
+                <a href="/deactivate/{{ s.id }}"
+                class="btn btn-danger btn-sm">
+                Deactivate
+                </a>
+
+                {% else %}
+
+                <a href="/activate/{{ s.id }}"
+                class="btn btn-success btn-sm">
+                Activate
+                </a>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+{% else %}
+
+    <div class="alert alert-info text-center">
+        No Staff Found.
+    </div>
+
+{% endif %}
+
+<br>
+
+<a href="/admin" class="btn btn-secondary">
+Back</a>
+
+
+<br>
+
+<hr>
+
+<footer class="text-center text-muted small">
+
+    <p class="mb-1">
+    © 2026 Trekking Management Application</p>
+
+</footer>
+
+
+</body>
+
+</html>

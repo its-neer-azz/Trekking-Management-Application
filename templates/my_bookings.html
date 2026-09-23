@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>My Bookings</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="container mt-4">
+
+    <h2 class="text-center mb-4">My Bookings</h2>
+
+    <h3 class="text-primary">
+        Current Bookings</h3>
+
+    {% if current_bookings %}
+
+    <table class="table table-bordered table-striped">
+
+        <tr>
+
+            <th>Trek</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Action</th>
+
+        </tr>
+
+        {% for booking in current_bookings %}
+
+        <tr>
+
+            <td>{{ booking.trek.name }}</td>
+            <td>{{ booking.trek.location }}</td>
+            <td>{{ booking.trek.difficulty }}</td>
+
+            <td>{{ booking.booking_status }}</td>
+            <td>{{ booking.payment_status }}</td>
+            <td>
+
+                <a href="/cancel_booking/{{ booking.id }}"
+                   class="btn btn-danger btn-sm">
+                    Cancel</a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">No Current Bookings.
+    </div>
+
+    {% endif %}
+
+    <hr>
+
+    <h3 class="text-success">
+        Trekking History
+    </h3>
+
+    {% if history %}
+
+    <table class="table table-bordered table-striped">
+
+        <tr>
+            <th>Trek</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Status</th>
+            <th>Booking Date</th>
+
+        </tr>
+
+        {% for booking in history %}
+
+        <tr>
+
+            <td>{{ booking.trek.name }}</td>
+            <td>{{ booking.trek.location }}</td>
+
+            <td>{{ booking.trek.difficulty }}</td>
+            <td>{{ booking.booking_status }}</td>
+            <td>{{ booking.booking_date.strftime("%d-%m-%Y") }}</td>
+        </tr>
+
+        {% endfor %}
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-secondary">
+        No Trekking History Yet.
+    </div>
+
+    {% endif %}
+
+    <div class="text-center mt-4">
+
+        <a href="/user" class="btn btn-secondary">
+            Back</a>
+    </div>
+
+<br>
+
+<hr>
+
+<footer class="text-center text-muted small">
+
+    <p class="mb-1">
+    © 2026 Trekking Management Application</p>
+
+</footer>
+
+</body>
+</html>

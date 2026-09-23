@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Trek</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+
+    <h1 class="text-center mb-2">Trekking Management Application
+    </h1>
+
+    <p class="text-center text-success mb-4">
+        Create a new trek for users.
+    </p>
+
+<div class="card shadow p-4 mx-auto" style="max-width:600px;">
+
+    <h3 class="text-center mb-4">
+        Add New Trek
+    </h3>
+
+<form method="POST">
+
+<div class="mb-3">
+    <label class="form-label">Trek Name</label>
+    <input type="text" name="name" class="form-control" required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Location</label>
+    <input type="text" name="location" class="form-control" required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Difficulty</label>
+
+    <select name="difficulty" class="form-select">
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+
+    </select>
+
+</div>
+
+<div class="mb-3">
+    <label class="form-label"> Duration (Days)) </label>
+    <input type="number" name="duration" class="form-control" min="1" required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Total Slots </label>
+    <input type="number" name="total_slots" class="form-control" min="1" required>
+</div>
+
+
+<div class="mb-4">
+    <label class="form-label">Status </label>
+
+    <select name="status" class="form-select">
+
+        <option>Open</option>
+        <option>Closed</option>
+
+    </select>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+    Assign Staff
+</label>
+
+<select name="staff_id" class="form-select">
+
+    <option value="">
+        Select Staff
+    </option>
+
+    {% for staff in staff_members %}
+
+    <option value="{{ staff.id }}">
+    {{ staff.name }}
+    </option>
+
+    {% endfor %}
+
+</select>
+
+</div>
+
+<button type="submit" class="btn btn-success w-100">Add Trek
+</button>
+
+</form>
+
+<hr>
+
+    <div class="text-center">
+
+        <a href="/admin" class="btn btn-secondary">Back to Dashbooard</a>
+    </div>
+
+</div>
+
+<hr>
+
+<footer class="text-center text-muted small">
+
+    <p class="mb-1">
+    © 2026 Trekking Management Application
+    </p>
+
+</footer>
+
+</body>
+</html>

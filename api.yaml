@@ -1,0 +1,114 @@
+openapi: 3.0.0
+
+info:
+  title: Trekking Management Application API
+  version: 1.0.0
+  description: API documentation for the Trekking Management Application.
+
+paths:
+
+  /:
+    get:
+      summary: Home Page
+
+  /login:
+    get:
+      summary: Display Login Page
+    post:
+      summary: Authenticate User
+
+  /register:
+    get:
+      summary: Display Registration Page
+    post:
+      summary: Register User or Staff
+
+  /logout:
+    get:
+      summary: Logout User
+
+  /admin:
+    get:
+      summary: Admin Dashboard
+
+  /staff:
+    get:
+      summary: Staff Dashboard
+
+  /user:
+    get:
+      summary: User Dashboard
+
+  /approve/{id}:
+    get:
+      summary: Approve Staff Registration
+
+  /activate/{id}:
+    get:
+      summary: Activate User or Staff
+
+  /deactivate/{id}:
+    get:
+      summary: Deactivate User or Staff
+
+  /all_users:
+    get:
+      summary: View All Users
+
+  /all_staff:
+    get:
+      summary: View All Staff
+
+  /add_trek:
+    get:
+      summary: Display Add Trek Form
+    post:
+      summary: Add New Trek
+
+  /edit_trek/{id}:
+    get:
+      summary: Display Edit Trek Form
+    post:
+      summary: Update Trek
+
+  /delete_trek/{id}:
+    get:
+      summary: Delete Trek
+
+  /announcement:
+    post:
+      summary: Create or Update Announcement
+
+  /book_trek/{id}:
+    get:
+      summary: Book Trek
+
+  /my_bookings:
+    get:
+      summary: View My Bookings
+
+  /cancel_booking/{id}:
+    get:
+      summary: Cancel Booking
+
+  /edit_profile:
+    get:
+      summary: Display Edit Profile Page
+    post:
+      summary: Update User Profile
+
+  /start_trek/{id}:
+    get:
+      summary: Start Trek
+
+  /complete_trek/{id}:
+    get:
+      summary: Complete Trek
+
+  /trek_bookings/{id}:
+    get:
+      summary: View Participants of a Trek
+
+  /all_bookings:
+    get:
+      summary: View All Bookings

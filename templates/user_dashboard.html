@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="container mt-4">
+
+<h2 class="text-center fw-bold">
+    Trekking Management Application</h2>
+
+<p class="text-center text-success mb-4">
+ Welcome! Search and book your next trekking adventure.</p>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+{% for category, message in messages %}
+
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+<div class="card shadow p-4 mb-4">
+
+    <h4 class="mb-3">
+        Search Treks
+    </h4>
+
+    <form method="GET" action="/user">
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <input
+            type="search"
+            name="search"
+            class="form-control"
+            placeholder="Search by trek name or location"
+            value="{{ request.args.get('search','') }}">
+        </div>
+
+        <div class="col-md-3">
+            <select name="difficulty" class="form-select">
+
+                    <option value="All">All Difficulty</option>
+                    <option value="Easy"
+                    {% if request.args.get('difficulty')=="Easy" %}
+                    selected
+                    {% endif %}>
+                    Easy
+                    </option>
+
+                    <option value="Medium"
+                    {% if request.args.get('difficulty')=="Medium" %}
+                    selected
+                    {% endif %}>
+                    Medium
+                    </option>
+
+                    <option value="Hard"
+                    {% if request.args.get('difficulty')=="Hard" %}
+                    selected
+                    {% endif %}>
+                    Hard
+                    </option>
+                </select>
+
+        </div>
+
+        <div class="col-md-3 d-flex gap-2">
+
+            <button class="btn btn-primary w-100">
+            Search
+            </button>
+            <a href="/user" class="btn btn-secondary">
+            Reset
+            </a>
+
+        </div>
+    </div>
+
+    </form>
+
+</div>
+
+<h4 class="mb-3">
+    Available Treks
+</h4>
+
+{% if treks %}
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-hover table-striped align-middle">
+
+            <tr>
+
+            <th>Name</th>
+            <th>Location</th>
+            <th>Difficulty</th>
+            <th>Duration</th>
+            <th>Available Slots</th>
+            <th>Action</th>
+
+            </tr>
+
+                {% for trek in treks %}
+
+            <tr>
+
+                <td>{{ trek.name }}</td>
+
+                <td>{{ trek.location }}</td>
+
+                <td>{{ trek.difficulty }}</td>
+
+                <td>{{ trek.duration }} Days</td>
+
+                <td>{{ trek.available_slots }}</td>
+
+                <td>
+
+                <a href="/book_trek/{{ trek.id }}"
+                class="btn btn-success btn-sm">
+
+                Book Trek
+
+                </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+</div>
+
+{% else %}
+
+<div class="alert alert-warning text-center">
+
+    No Treks Found.
+</div>
+
+{% endif %}
+
+<hr>
+
+<div class="text-center">
+
+    <a href="/my_bookings" class="btn btn-primary">My Bookings
+    </a>
+
+    <a href="/edit_profile" class="btn btn-warning">
+    Edit Profile</a>
+
+    <a href="/logout" class="btn btn-danger">Logout</a>
+
+</div>
+
+<hr>
+<footer class="text-center text-muted small">
+
+    <p class="mb-1">
+    © 2026 Trekking Management Application</p>
+
+</footer>
+</body>
+
+</html>
